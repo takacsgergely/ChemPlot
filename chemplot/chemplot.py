@@ -354,7 +354,8 @@ class Plotter(object):
         return self.__df_2_components.copy()
 
 
-    def visualize_plot(self, size=20, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, clusters=False, filename=None, title=None, palette="deep"):
+    def visualize_plot(self, size=60, kind="scatter", remove_outliers=False, is_colored=True, colorbar=False, clusters=False, filename=None, title=None, palette="deep"):
+        # default size=20
         """
         Generates a plot for the given molecules embedded in two dimensions.
 
@@ -442,19 +443,22 @@ class Plotter(object):
         #sns.set_style("dark")
         sns.set_style("white")
         sns.set_context("notebook", font_scale=size*0.15)
-        fig, ax = plt.subplots(figsize=(size,size))
+        fig, ax = plt.subplots(figsize=(size, size))
 
         # Create a plot based on the reduced components
         if kind == "scatter":
-            #plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*1.5)
-            plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*10) #dekanygergo
-            #plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*1) #haznagymarci
+            #plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*1) #kovacsferenc_0418; anna_20230418 5 #kovacsferenc_0424 perpol
+            #plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*10) #dekanygergo
+            plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*0.5) # haznagy_marci_300k, kovacsferenc_whole
+            #plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*1)
+            #plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*7) # grc v1
+            #plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*3) # grc v2
+            #plot = sns.scatterplot(x=x, y=y, hue=hue, hue_order=hue_order, palette=palette, data=df_data, s=size*7) # grc v3
             plot.set_label("scatter")
             axis = plot
-            plot.legend(markerscale=size*0.19)
-            sns.move_legend(plot, "lower center",
-                bbox_to_anchor=(.5, 1), ncol=3, title=None, frameon=False,
-                )
+            # plot.legend(markerscale=size*0.16, fontsize=40, loc="lower left", bbox_to_anchor=(-0.03, 1), ncol=3, title=None) # used for perpol tsne
+            plot.legend(markerscale=size*0.10, fontsize=20, loc="lower left", bbox_to_anchor=(-0.03, 1), ncol=3, title=None)
+            plot.legend(markerscale=size*0.07, fontsize=20, loc="lower left", bbox_to_anchor=(-0.03, 1), ncol=3, title=None) # used for GRC poster
             # Add colorbar
             if self.__target_type == "R" and colorbar:
                 plot.get_legend().remove()
